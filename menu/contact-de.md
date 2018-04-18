@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Contact
-lang: English
+title: Kontakt
+lang: Deutsch
 ref: contact
 ---

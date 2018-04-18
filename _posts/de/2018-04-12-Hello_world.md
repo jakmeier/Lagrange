@@ -1,10 +1,12 @@
 ---
 layout: post
-title: "Nothing here, yet"
+title: "Noch nichts hier, soweit..."
 author: "Jakob Meier"
 categories: journal
 tags: [documentation,sample]
 image: misty.jpg
+lang: Deutsch
+ref: hello-world
 ---
 
-Something is about the be created here...
+Hallo Welt!

@@ -1,0 +1,48 @@
+
+body {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+/* Language Selector */
+
+button.language-selector {
+    background-color: gray;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin: 8px;
+}
+
+nav.language-selector {
+    position: relative;
+    display: inline-block;
+}
+
+div.dropdown {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 130px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+div.dropdown a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+div.dropdown a:hover {background-color: #f1f1f1}
+
+nav.language-selector:hover .dropdown {
+    display: block;
+}
+
+nav.language-selector:hover button.language-selector {
+    background-color: black;
+}

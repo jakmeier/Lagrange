@@ -1,0 +1,29 @@
+<div class="pagination">
+
+{% for post in site.posts %}
+  {% if post.lang == page.lang %}
+    {% if prev %}
+	<a class="pagination-button pagination-active" href="{{ post.url }}" class="next">{{ site.data.settings.pagination.previous_page }}</a>
+    {% endif %}
+    {% assign prev = false %}
+    {% if post.id == page.id %}
+      {% assign prev = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+
+{% for post in site.posts reversed %}
+  {% if post.lang == page.lang %}
+    {% if next %}
+          <a class="pagination-button pagination-active" href="{{ post.url }}">{{ site.data.settings.pagination.next_page }}</a>
+
+      {% break %}
+    {% endif %}
+    {% assign next = false %}
+    {% if post.id == page.id %}
+      {% assign next = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+</div>
