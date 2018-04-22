@@ -1,3 +1,6 @@
+
+{% assign t = site.data.settings.TEXTS %}
+
 <footer class="footer">
-  <div class="post-date"><a href="{{ site.github.url }}/menu/about.html">{{ site.title }} | {{ site.description }} by {{ site.author }}</a></div>
+  <div class="post-date"><a href="{{ site.github.url }}/menu/about.html">{{ t.site.title[page.lang] }} | {{ t.site.description[page.lang] }} </a></div>
 </footer>

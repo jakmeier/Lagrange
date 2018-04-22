@@ -1,23 +1,50 @@
-# Change to true for Disqus comments
-disqus:
-  comments: false
-  disqus_shortname: 'https-lenpaul-github-io-lagrange'
-
-#google-ID: 'UA-112060364-1'
 
 menu:
-- {lang: English, name: 'About', path: 'menu', url: 'about.html'}
-- {lang: Deutsch, name: 'Über mich', path: 'menu', url: 'about-de.html'}
-- {lang: English, name: 'Contact', path: 'menu', url: 'contact.html'}
-- {lang: Deutsch, name: 'Kontakt', path: 'menu', url: 'contact-de.html'}
+- {lang: en, name: 'About', path: 'menu', url: 'about.html'}
+- {lang: de, name: 'Über mich', path: 'menu', url: 'about-de.html'}
+- {lang: en, name: 'Contact', path: 'menu', url: 'contact.html'}
+- {lang: de, name: 'Kontakt', path: 'menu', url: 'contact-de.html'}
 
 # Customize site text
-pagination:
-  next_page: 'Newer'
-  previous_page: 'Older'
 
-sharing_button_prompt: 'Feel free to share!'
-
-related_posts: 'You may also enjoy:'
-
-post_date_prefix: 'Written on'
+TEXTS:
+  site:
+    title:
+      en: Jakob's Blog 
+      de: Jakobs Blog
+    description:
+      en: Technologies in practice
+      de: Technologien praktisch angewandt
+    author:
+      en: 'Jakob Meier'
+      de: 'Jakob Meier'
+  next_page: 
+    en: 'Newer'
+    de: 'Nächster Beitrag'
+  previous_page: 
+    en: 'Older'
+    de: 'Vorheriger Beitrag'
+  related_posts: 
+    en: 'You may also enjoy:'
+    de: 'Ähnliche Beiträge:'
+  post_date_prefix: 
+    en: 'Written on'
+    de: 'Verfasst am'
+  post_date_postfix: 
+    en: 'by'
+    de: 'von'
+  en:
+    en: 'English'
+    de: 'Englisch'
+  de: 
+    en: 'German'
+    de: 'Deutsch'
+  less-than-a-minute:
+    en: less than 1 minute read
+    de: weniger als 1 Minute zum Lesen
+  one-minute-read:
+    en: 1 minute read
+    de: 1 Minute zum Lesen
+  minutes-to-read:
+      en: minutes read
+      de: Minuten zum Lesen

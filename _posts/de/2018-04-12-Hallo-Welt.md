@@ -5,7 +5,7 @@ author: "Jakob Meier"
 categories: journal
 tags: [documentation,sample]
 image: misty.jpg
-lang: Deutsch
+lang: de
 ref: hello-world
 ---
 

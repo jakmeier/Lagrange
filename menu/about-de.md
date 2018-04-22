@@ -1,6 +1,6 @@
 ---
 layout: page
 title: Willkommen!
-lang: Deutsch
+lang: de
 ref: about
 ---

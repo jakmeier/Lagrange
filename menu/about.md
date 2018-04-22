@@ -1,6 +1,6 @@
 ---
 layout: page
 title: Welcome!
-lang: English
+lang: en
 ref: about
 ---

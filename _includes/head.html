@@ -1,8 +1,11 @@
+
+{% assign t = site.data.settings.TEXTS %}
+
 <head>
 
   <title>
-    {% if page.title == "Home" %}
-      {{ site.title }} | {{ site.description }}
+    {% if page.ref == "index" %}
+      {{ t.site.title[page.lang] }} | {{ t.site.description[page.lang] }}
     {% else %}
       {{ page.title }} | {{ site.title }}
     {% endif %}
