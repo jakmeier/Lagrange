@@ -1,9 +1,9 @@
 
 menu:
-- {lang: en, name: 'About', path: 'menu', url: 'about.html'}
-- {lang: de, name: 'Über mich', path: 'menu', url: 'about-de.html'}
 - {lang: en, name: 'Contact', path: 'menu', url: 'contact.html'}
 - {lang: de, name: 'Kontakt', path: 'menu', url: 'contact-de.html'}
+
+email: inbox@jakobmeier.ch
 
 # Customize site text
 
