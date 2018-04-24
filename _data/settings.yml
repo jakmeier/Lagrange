@@ -46,5 +46,8 @@ TEXTS:
     en: 1 minute read
     de: 1 Minute zum Lesen
   minutes-to-read:
-      en: minutes read
-      de: Minuten zum Lesen
+    en: minutes read
+    de: Minuten zum Lesen
+  tech-stack:
+    en: Technology stack
+    de: Technologien in diesem Beitrag

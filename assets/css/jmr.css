@@ -1,4 +1,4 @@
-
+ /* Site structure */
 body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -45,4 +45,21 @@ nav.language-selector:hover .dropdown {
 
 nav.language-selector:hover button.language-selector {
     background-color: black;
+}
+
+/* posts */
+p.intro {
+  font-weight: 600;
+}
+
+/* Tech stack */
+div.technologies-list {
+  display: grid;
+  grid-template-columns: 140px auto;
+}
+div.tech-img {
+  padding: 20px;
+}
+div.tech-content {
+  margin-left: 20px;
 }

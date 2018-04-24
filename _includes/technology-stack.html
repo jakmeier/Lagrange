@@ -1,0 +1,29 @@
+{% assign t = site.data.settings.TEXTS %}
+
+{% if page.techs %}
+  <a name="tech-stack-anker"></a>
+  <div class="tech-stack">
+    <h1>{{ t.tech-stack[page.lang] }}</h1>
+    <div class="technologies-list">
+      {% for tech in page.techs %}
+        {% assign item = tech[1] %}
+        
+        <div class="tech-img">
+          {% if item.img %}
+            <img src="{{ site.github.url }}/assets/img/techs/{{ item.img }}"></img>
+          {% endif %}
+        </div>
+        <div class="tech-content">
+          {% if item.url %}
+            <a href="{{ item.url }}">
+          {% endif %}
+          <h3 class="tech-title">{{ item.title }}</h3>
+          {% if item.url %}
+            </a>
+          {% endif %}
+          <p class="tech-description">{{ item.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
