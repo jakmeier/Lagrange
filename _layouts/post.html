@@ -18,12 +18,16 @@ layout: default
 </span>
 
 {% if page.image %}
-  <img src="{{ site.github.url }}/assets/img/{{ page.image }}">
+  <img src="{{ site.github.url }}/assets/img/{{ page.image }}" title="{{ page.image_tooltip }}">
 {% endif %}
 
 {{ content }}
 
-
+{% if page.nextref %}
+  <p class="jmr-next-in-series">
+    {{ t.next-in-series[page.lang] }}: {% include link-with-title-by-ref.html ref=page.nextref %}
+  </p>
+{% endif %}
 
 {% include technology-stack.html %}
 

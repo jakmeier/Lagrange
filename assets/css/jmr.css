@@ -51,6 +51,10 @@ nav.language-selector:hover button.language-selector {
 p.intro {
   font-weight: 600;
 }
+p.jmr-next-in-series {
+  color: #ff5800;
+  margin: 100px 0;
+}
 
 /* Tech stack */
 div.technologies-list {
@@ -62,4 +66,10 @@ div.tech-img {
 }
 div.tech-content {
   margin-left: 20px;
+}
+
+/* Code snipptes */
+pre {
+  overflow-x: scroll;
+  white-space: pre;
 }

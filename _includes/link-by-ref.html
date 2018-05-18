@@ -1,0 +1,2 @@
+{% assign linked_post=site.posts | where: "ref", include.ref | first%}
+{{ linked_post.url }}
