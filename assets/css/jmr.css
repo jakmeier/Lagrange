@@ -3,6 +3,15 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
+h1 {
+  line-height: normal;
+}
+h2 {
+  margin-top: 50px;
+}
+h3 {
+  margin-top: 30px;  
+}
 
 /* Language Selector */
 
@@ -72,4 +81,8 @@ div.tech-content {
 pre {
   overflow-x: scroll;
   white-space: pre;
+}
+.highlighter-rouge .highlight  .err {
+  /* Fixes a weird error on characters like - or / */
+  background-color: unset;
 }
