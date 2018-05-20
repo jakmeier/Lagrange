@@ -1,5 +1,9 @@
 
 menu:
+- {lang: en, name: 'Programming', path: 'menu', url: 'programming.html'}
+- {lang: de, name: 'Programmierung', path: 'menu', url: 'programming-de.html'}
+- {lang: en, name: 'Meta', path: 'menu', url: 'blogging.html'}
+- {lang: de, name: 'Meta', path: 'menu', url: 'blogging-de.html'}
 - {lang: en, name: 'Contact', path: 'menu', url: 'contact.html'}
 - {lang: de, name: 'Kontakt', path: 'menu', url: 'contact-de.html'}
 
@@ -9,6 +13,9 @@ email: inbox@jakobmeier.ch
 
 TEXTS:
   site:
+    home_file:
+      en: index.html
+      de: index-de.html
     title:
       en: Jakob's Blog 
       de: Jakobs Blog
@@ -24,6 +31,9 @@ TEXTS:
   previous_page: 
     en: 'Older'
     de: 'Vorheriger Beitrag'
+  posts: 
+    en: 'Posts'
+    de: 'Beiträge'
   related_posts: 
     en: 'You may also enjoy:'
     de: 'Ähnliche Beiträge:'
