@@ -64,7 +64,7 @@ p.intro {
   font-weight: 600;
 }
 p.jmr-next-in-series {
-  color: #ff5800;
+  color: #fe6a00;
   margin: 100px 0;
 }
 
@@ -88,4 +88,14 @@ pre {
 .highlighter-rouge .highlight  .err {
   /* Fixes a weird error on characters like - or / */
   background-color: unset;
+}
+
+
+/*
+   CONFIGURABLE PER POST
+*/
+
+/* Thumbnail Configuration */
+.thumbnail-container img.no-crop{
+  margin: 0;
 }

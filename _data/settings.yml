@@ -2,6 +2,8 @@
 menu:
 - {lang: en, name: 'Programming', path: 'menu', url: 'programming.html'}
 - {lang: de, name: 'Programmierung', path: 'menu', url: 'programming-de.html'}
+- {lang: en, name: 'Internet of things', path: 'menu', url: 'iot.html'}
+- {lang: de, name: 'Internet der Dinge', path: 'menu', url: 'iot-de.html'}
 - {lang: en, name: 'Meta', path: 'menu', url: 'blogging.html'}
 - {lang: de, name: 'Meta', path: 'menu', url: 'blogging-de.html'}
 - {lang: en, name: 'Contact', path: 'menu', url: 'contact.html'}
