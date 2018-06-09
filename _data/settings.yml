@@ -11,6 +11,8 @@ menu:
 
 email: inbox@jakobmeier.ch
 
+git_repository_root_url: https://github.com/jakmeier/www.jakobmeier.ch/tree/gh-pages/ 
+
 # Customize site text
 
 TEXTS:
