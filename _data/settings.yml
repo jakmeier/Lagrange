@@ -13,6 +13,9 @@ email: inbox@jakobmeier.ch
 
 git_repository_root_url: https://github.com/jakmeier/www.jakobmeier.ch/tree/gh-pages/ 
 
+# Used for jmr-analytics, a sort of minimalistic custom analytics tool. Each page will simulate a click on a link in the form BASEURL{{page.ref}} on each load. This can be used to track viewer statics in a external service.
+jmr_analytics_base_url: https://bit.ly/2MAMZt-jmr-analytics-
+
 # Customize site text
 
 TEXTS:
