@@ -32,6 +32,9 @@ TEXTS:
     author:
       en: 'Jakob Meier'
       de: 'Jakob Meier'
+  read_more: 
+    en: 'Read more'
+    de: 'Mehr lesen'
   next_page: 
     en: 'Newer'
     de: 'Nächster Beitrag'

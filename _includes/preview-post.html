@@ -7,7 +7,7 @@
 {% endif %}
 <p>
   {{ post.content | strip_html | truncate: 350 }} 
-  <a href="{{ site.github.url }}{{ post.url }}">Read more</a>
+  <a href="{{ site.github.url }}{{ post.url }}">{{ site.data.settings.TEXTS.read_more[page.lang] }}</a>
   <span class="post-date">
     <i class="fa fa-calendar" aria-hidden="true"></i> 
     {{ post.date | date_to_string }} - 
