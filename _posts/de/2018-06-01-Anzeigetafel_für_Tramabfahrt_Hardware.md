@@ -10,7 +10,7 @@ lang: de
 ref: tram-station-board-hardware
 ---
 
-<p class="intro">Die Abfahrt des nächsten Trams immer im Blick, dank einer persönlichen Anzeigetafel. Wie stelle ich die Hardware dafür zusammen?</p>
+<p class="intro">Die Abfahrt des nächsten Trams immer im Blick, dank einer persönlichen Anzeigetafel. Heute wird die Hardware dafür zusammengestellt.</p>
 
 Im [letzten Beitrag]({% include link-by-ref.html ref="esp8266-intro" %}) habe ich das ESP-01S Modul vorgestellt und gezeigt, wie man den darauf installierten ESP8266 Chip programmieren kann. Jetzt geht es um ein konkretes Projekt, welches ich damit realisiert habe: Eine über das Internet aktualisierte LED-Anzeigetafel für Tramabfahrtszeiten.
 
@@ -29,7 +29,7 @@ Die Anzeige wird ständig aktualisiert mit den aktuellsten Daten, bereitgestellt
 ## Verwendete Komponente
  - ESP-01S Modul
  - 8x8 LED Matrix
- - 1x PCB Lochrasterplatine
+ - 1x Rohe Lochrasterplatine
  - 3x 74HCN595 8-bit Shift-Register
  - 47Ω und 3.3kΩ Widerstände
  - 0.1 μF Elektrolytkondensator
@@ -40,15 +40,11 @@ Auf dem Bild zu sehen sind alle Komponente, ausser der LED Matrix. Ausserdem sin
 
 ## Auslegung der Hauptelemente
 
-Die Auslegung der Komponente sollte für meinen Geschmack vor allem praktisch sein, nicht unbedingt wunderschön. Das Verstecken aller Technik ist ein klares NICHT-Ziel für mich. Lieber zeige ich einen Teil der Technik, um dem Beobachter unmittelbar ein besseres Verständnis des Objektes zu vermitteln. Daher befindet sich das ESP-01S Modul klar ersichtlich vorne und auch der Kondensator schaut oben heraus.
-
-Aus praktischen Gründen befindet sich der Rest allerdings hinten dran. Zudem würde das dort versteckte Durcheinander das Verständnis des Beobachters sicher nicht fördern.
+Die Auslegung der Komponente sollte für meinen Geschmack vor allem praktisch sein, nicht unbedingt wunderschön. Insbesondere will ich nicht zwingend die ganze Technik verstecken, ein Beobachter darf ruhig direkt ins Herzen des Gerätes sehen. Daher befindet sich das ESP-01S Modul klar ersichtlich vorne und auch der Kondensator schaut oben heraus. Aus praktischen Gründen befindet sich der Rest dann doch auf der Rückseite.
 
 Dort muss nun eine Verbindung der GPIOs des Chips zu den Pins der LED-Matrix gewährleistet werden. Die Herausforderung hierbei: Der ESP-01S hat nur 4 GPIOs aber die LED-Matrix hat 24 Pins zum Steuern(8 Reihen, 8 Kolonnen (rot) und 8 Kolonnen (gelb)). 
 
-An diesem Punkt kommen die 74HCN595 8-bit Shift-Register ins Spiel. Mit nur 3 GPIO können nahezu beliebig viele davon angesteuert werden, wenn man sie in Reihe schaltet. Jedes Register hat dann 8 Ausgänge die mit der LED Matrix verbunden werden können. Die genaue Funktionalität werde ich hier nicht beschreiben, das Datenblatt dazu kann aber [hier](https://www.sparkfun.com/datasheets/IC/SN74HC595.pdf) gefunden werden.
-
-Die 3 Shift-Register werden also hinten platziert und in Reihe geschaltet. Das Takten und Ausgeben der Werte kann bei allen drei Registern parallel passieren, somit teilen sie alle die zwei Verbindungen zum ESP-01S. Die zu schreibenden Bits werden dann durch eine zusätzlich Verbindung vom Chip zum ersten Register gesendet.
+An diesem Punkt kommen die 74HCN595 8-bit Shift-Register ins Spiel. Mit nur 3 GPIO können nahezu beliebig viele davon angesteuert werden, wenn man sie in Reihe schaltet. Jedes Register hat dann 8 Ausgänge die mit der LED Matrix verbunden werden können. In unserem Fall brauchen wir genau 3 solcher Register. Die genaue Funktionalität derer werde ich hier aber nicht beschreiben, dazu gibt es genügend ausgezeichnete Ressourcen im Internet und das Datenblatt zum verwendeten Modell sei [hier](https://www.sparkfun.com/datasheets/IC/SN74HC595.pdf) verlinkt.
 
 Hier der Schaltplan mit den Verbindungen der Register und der LED Matrix. Hellgrün ist der Takter (SRCLK), dunkelgrün die Ausgabe (RCLK) und gelb ist, wo die einzelnen Bits in die Register geschrieben werden (SER), beziehungsweise wo sie ans nächste Register weitergeben werden. Jede dieser Farben ist mit einem GPIO des ESP-01S verbunden. 
 
@@ -66,8 +62,7 @@ Wie gross müssen die Widerstände nun sein? Die angeschlossene Spannung ist 3.3
 
 \\[ R = {U \over I} = { 3.3V \over 0.07A} = 47.14\Omega \\]
 
-Dies gibt uns den kleinsten Widerstand den wir sicher verwenden können. Da ich gerade Widerstände der Grösse 47Ω zur Hand hatte, nahm ich diese. Die Angaben auf den Widerständen sind ohnehin nicht so genau und Ausfallsicherheit ist auch kein grosses Thema für mein Hobbyprojekt. Sichererer wäre es aber, einen etwas grösseren Widerstand zu verwenden, zum Beispiel 56Ω.
-
+Dies gibt uns den kleinsten Widerstand den wir sicher verwenden können. Da ich gerade Widerstände der Grösse 47Ω zur Hand hatte, nahm ich diese. Die Angaben auf den Widerständen sind ohnehin nicht so genau und Ausfallsicherheit ist auch kein relevantes Thema für mein Hobbyprojekt. Sichererer wäre es aber natürlich, einen etwas grösseren Widerstand zu verwenden, zum Beispiel 56Ω.
 
 Ebenfalls wichtig, die Widerstände die ich verwende, sind auf eine maximale Leistung von 0.25W ausgelegt, bei höheren Werten könnten sie durchbrennen. Damit ergibt eine weitere unterste Limite für den Widerstand. Diese kann wie folgt berechnet werden.
 
@@ -104,13 +99,13 @@ Hier findet nun der 3.3kΩ Widerstand Verwendung. Statt den **IO0** direkt an di
 
 Um das Stromsignal immer schön stabil zu halten, können verschiedene Arten von Kondensatoren in Gebrauch kommen. Denn sowohl die integrierten Komponenten (in unserem Fall dem ESP-01S und den Shift-Registern) sowie die Stromquelle selbst verursachen Störsignale auf dem Stromnetz. Dies kann dann wiederum zu unerwartetem Verhalten der Einzelteile führen.
 
-In diesem Gebiet bin ich ein blutiger Anfänger und einzig für dieses Projekt habe ich angefangen über Stützkondensatoren (Decoupling capacitors) und Bypasskondensatoren zu lernen. Die erste Art wird verwendet, um Störsignale zwischen verschiedenen Komponenten zu isolieren, die zweite Art dient dazu die Unregelmässigkeiten direkt von der Stromquelle her auszugleichen. Soweit mein Verständnis vom Thema. Dem interessierten Leser empfehle ich aber, die Informationen andernorts von Profis einzuholen. Und falls ein Profi dies lesen sollte, darf er oder sie mich auch gerne belehren und ich werde es hier verbessern.
+In diesem Gebiet bin ich ein blutiger Anfänger und einzig für dieses Projekt habe ich angefangen über Stützkondensatoren (Decoupling capacitors) und Koppelkondensatoren(Coupling capacitors) zu lernen. Grob gesprochen, wird die erste Art verwendet, um die Spitzen im Stromverbrauch zwischen verschiedenen Komponenten auszugleichen, die zweite Art dient dazu die Unregelmässigkeiten direkt von der Stromquelle her zu eliminieren. Soweit mein Verständnis vom Thema. Dem interessierten Leser empfehle ich aber, die Informationen andernorts von Profis einzuholen. Und falls ein Profi dies lesen sollte, darf er oder sie mich auch gerne belehren und ich werde es hier verbessern.
 
-Das vorgestellte Projekt funktioniert wahrscheinlich auch ohne jegliche Kondensatoren, zumindest meistens. Allerdings hatte ich manchmal Unregelmässigkeiten beobachtet beim Ein- oder Ausschalten der LEDs in der Matrix. Diese Unregelmässigkeiten wollte ich dann mit einem Stützkondenstor so nah wie möglich am Plus / Minus des ESP-01S beheben. Die Idee dabei ist, dass der Chip ruckartige Änderungen in der Stromnutzung hat, wenn beispielsweise die Wi-Fi Funktionalität ein- und wieder ausgeschaltet wird. Der Stützkondensator soll dabei helfen, die gegenseitige Störung des Chips  und des restlichen Schaltkreises zu reduzieren.
+Das vorgestellte Projekt funktioniert wahrscheinlich auch ohne jegliche Kondensatoren, zumindest meistens. Allerdings hatte ich manchmal Unregelmässigkeiten beobachtet beim Ein- oder Ausschalten der LEDs in der Matrix. Diese Unregelmässigkeiten wollte ich dann mit einem Stützkondenstor so nah wie möglich am Plus / Minus des ESP-01S beheben. Die Idee dabei ist, dass der Chip ruckartige Änderungen in der Stromnutzung hat, wenn beispielsweise die Wi-Fi Funktionalität ein- und wieder ausgeschaltet wird. Der Stützkondensator soll dabei helfen, diese Spitzen im Stromnetz etwas zu ebnen und somit die gegenseitige Störung des Chips und des restlichen Schaltkreises zu reduzieren.
 
 Nachdem der Stützkondensator eingebaut wurde und ich später auch noch ein paar Lötstellen nochmals sauber nachgelötete habe, konnte ich keine Unregelmässigkeiten mehr beobachten. Ob der Kondensator wirklich nötig war, kann ich nicht mit Sicherheit sagen. Aufgrund meiner Beobachtungen vermute ich aber zumindest eine positive Wirkung. 
 
-Ebenfalls unklar ist, ob ein Bypasskondensator allenfalls eine bessere Lösung gewesen wäre, was ich nicht mehr ausprobiert habe, denn es hat ja schon alles funktioniert. 😉
+Ebenfalls unklar ist, ob ein Koppelkondensator allenfalls eine bessere Lösung gewesen wäre, was ich nicht mehr ausprobiert habe, denn es hat ja schon alles funktioniert. 😉
 
 ## Ergebnis
 
