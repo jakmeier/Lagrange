@@ -178,7 +178,10 @@ Sollte etwas schiefgehen, geht das System in den **Error** Zustand. Dann wird ei
 
 Damit man immer schön sieht, was das System gerade macht, wird in den anderen Zuständen ein eindeutiges Muster angezeigt. Im Video eine kleine Demonstration wie es aussieht, wenn das System startet und initial eine Verbindung aufbaut.
 
-{% video /assets/vid/18/sbb_boot_up.mp4 640 320 %}
+<video width="640" height="320" controls>
+  <source src="/assets/vid/18/sbb_boot_up.mp4" type="video/mp4">
+  Dein Browser unterstützt keine HTML5 Videos.
+</video> 
 
 Der erste Zustand **Init** ist zu kurz um etwas zu sehen. Danach sieht man aber das Muster vom **Wifi Connected** Zustand für etwa 5 Sekunden.
 

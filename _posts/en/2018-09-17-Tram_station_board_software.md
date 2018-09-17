@@ -178,7 +178,10 @@ If something goes wrong, one of many possible **Error** states is entered and a 
 
 To make it easy to see what the system is currently doing, the display shows different patterns in different states. For demonstration, this is what it looks like when the chip boots up.
 
-{% video /assets/vid/18/sbb_boot_up.mp4 640 320 %}
+<video width="640" height="320" controls>
+  <source src="/assets/vid/18/sbb_boot_up.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video> 
 
 The state **Init** is too fast to be seen properly but the **Wifi Connected** state afterward takes about 5 seconds and you can see the corresponding splash screen in the video.
 
