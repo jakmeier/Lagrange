@@ -8,6 +8,7 @@ image: 18/tram_station_on_tree.jpg
 image_tooltip: 
 lang: en
 ref: tram-station-board-hardware
+nextref: tram-station-board-software
 ---
 
 <p class="intro">The time until the departure of the next tram always displayed on my room's wall. How to build the hardware for it?</p>

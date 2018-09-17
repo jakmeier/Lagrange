@@ -8,6 +8,7 @@ image: 18/tram_station_on_tree.jpg
 image_tooltip: 
 lang: de
 ref: tram-station-board-hardware
+nextref: tram-station-board-software
 ---
 
 <p class="intro">Die Abfahrt des nächsten Trams immer im Blick, dank einer persönlichen Anzeigetafel. Heute wird die Hardware dafür zusammengestellt.</p>
