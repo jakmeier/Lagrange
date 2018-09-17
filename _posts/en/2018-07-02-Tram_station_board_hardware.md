@@ -3,7 +3,7 @@ layout: post
 title: "A public transportation departures display in my home – The Hardware"
 author: "Jakob Meier"
 categories: IOT
-tags: [iot,esp8266,esp-01s,hardware,electronics]
+tags: [iot,esp8266,esp-01s,hardware,electronics,soldering]
 image: 18/tram_station_on_tree.jpg
 image_tooltip: 
 lang: en
@@ -14,7 +14,7 @@ ref: tram-station-board-hardware
 
 In my [last post]({% include link-by-ref.html ref="esp8266-intro" %}), I have introduced the ESP-01S module and I showed how to program the integrated ESP8266. Now, I want to talk about a project I have realized, using that technology.
 
-This post covers the design thought behind the hardware. The software part, including all code running on the chip, is postponed to the next post.
+This post covers the design thoughts behind the hardware. The software part, including all code running on the chip, is postponed to the next post.
 
 ## What we are aiming for
 

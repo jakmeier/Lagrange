@@ -1,2 +1,2 @@
-{% assign linked_post=site.posts | where: "ref", include.ref | first%}
+{% assign linked_post=site.posts | where: "ref", include.ref | where: "lang", page.lang | first %}
 {{ linked_post.url }}
