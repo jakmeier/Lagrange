@@ -1,0 +1,27 @@
+<div class="all-techs">
+    {% assign listed = "" | split: ' '  %}
+    {% for post in site.posts %}
+        {% if post.lang == page.lang %}
+            {% for tech in post.techs %}
+                {% if listed contains tech %}
+                {% else %}
+                    {% assign listed = listed | push: tech %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    {% for tech in listed %}
+        <div class="tech">
+            {% if page.lang == "en" %}
+                <a href="{{ site.url }}/techs?query={{ tech[0] }}">
+            {% else %}
+                <a href="{{ site.url }}/techs-{{page.lang}}?query={{ tech[0] }}">
+            {% endif %}
+                <img src="{{ site.url }}/assets/img/techs/{{ tech[1].img }}" title="{{ tech[1].title }}">
+                <p>{{ tech[1].title }}</p>
+                <p class="uihint">{{ site.data.settings.TEXTS.find-articles[page.lang] }}</p>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+  

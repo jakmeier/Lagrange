@@ -90,6 +90,48 @@ pre {
   background-color: unset;
 }
 
+/* Tech-Map */
+div.all-techs {
+  grid-template-columns: 1fr 1fr 1fr;
+  display: grid;
+  grid-gap: 10px;
+}
+div.all-techs div.tech {
+  display: inline-flex;
+  flex-direction: row;
+  text-align: center;
+  padding: 20px 20px 30px 20px;
+  border-radius: 5px;
+  position: relative;
+}
+div.all-techs div.tech:hover{
+  background-color: rgba(128, 128, 128, 0.5);
+}
+div.all-techs p.uihint {
+  color: white;
+  text-decoration: none;
+  font-family: 'Quattrocento Sans', sans-serif;
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+div.all-techs div.tech img {
+  height: 100px;
+  width: 150px;
+  object-fit: scale-down;
+}
+div.all-techs div.tech p {
+  margin: 0;
+}
+
+/* Tech-Map search */
+var.tech-info {
+  display: none;
+}
 
 /*
    CONFIGURABLE PER POST
@@ -98,4 +140,11 @@ pre {
 /* Thumbnail Configuration */
 .thumbnail-container img.no-crop{
   margin: 0;
+}
+
+
+@media (max-width: 30em) {
+  div.all-techs {
+    grid-template-columns: 1fr 1fr;
+  }
 }

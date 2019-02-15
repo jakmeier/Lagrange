@@ -1,11 +1,9 @@
 
 menu:
-- {lang: en, name: 'Programming', path: 'menu', url: 'programming.html'}
-- {lang: de, name: 'Programmierung', path: 'menu', url: 'programming-de.html'}
-- {lang: en, name: 'Internet of things', path: 'menu', url: 'iot.html'}
-- {lang: de, name: 'Internet der Dinge', path: 'menu', url: 'iot-de.html'}
-- {lang: en, name: 'Meta', path: 'menu', url: 'blogging.html'}
-- {lang: de, name: 'Meta', path: 'menu', url: 'blogging-de.html'}
+- {lang: en, name: 'Blog', path: '', url: 'index.html'}
+- {lang: de, name: 'Blog', path: '', url: 'index-de.html'}
+- {lang: en, name: 'Technology-Map', path: 'menu', url: 'techmap.html'}
+- {lang: de, name: 'Technologienkarte', path: 'menu', url: 'techmap-de.html'}
 - {lang: en, name: 'Contact', path: 'menu', url: 'contact.html'}
 - {lang: de, name: 'Kontakt', path: 'menu', url: 'contact-de.html'}
 
@@ -27,8 +25,8 @@ TEXTS:
       en: Jakob's Blog 
       de: Jakobs Blog
     description:
-      en: Technologies in practice
-      de: Technologien praktisch angewandt
+      en: Personal insights into technologies
+      de: Persönliche Erfahrungen mit Technologien
     author:
       en: 'Jakob Meier'
       de: 'Jakob Meier'
@@ -74,3 +72,9 @@ TEXTS:
   next-in-series:
     en: Next post in series
     de: Nächster Beitrag in dieser Serie
+  detectjs:
+    en: Please activate Javascript.
+    de: Bitte aktiviere Javascript.
+  find-articles:
+    en: Find articles
+    de: Finde Beiträge
