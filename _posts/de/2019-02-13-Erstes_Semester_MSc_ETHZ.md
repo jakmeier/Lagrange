@@ -36,7 +36,7 @@ techs:
   c++:
     title: C++11  und die Standard Template Library (STL)
     description: C++ ist eine objektorientierte, low-level Programmiersprache und C++11 ist der ISO zertifizierte Standard  of von 2011. Die STL besteht aus einer Anzahl von Template Klassen die häufig verwendete Algorithmen und Datenstrukturen implementieren.
-    img: c_plus_plus.png
+    img: cpp.png
   make:
     title: GNU make
     description: Ein Tool zur Buildautomatisierung. Es ist besonders geeignet, um Dateien die von anderen Dateien abhängig sind, automatisch zu (re-)generieren. Oft wird es in C/C++ oder LaTeX Projekten verwendet.
