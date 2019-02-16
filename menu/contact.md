@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: contact
 title: Contact
 lang: en
 ref: contact

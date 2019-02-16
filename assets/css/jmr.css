@@ -133,6 +133,16 @@ var.tech-info {
   display: none;
 }
 
+/* Contact page */
+div.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-gap: 20px;
+}
+div.contact-content :first-child {
+  margin-top: 0;
+}
+
 /*
    CONFIGURABLE PER POST
 */
