@@ -33,7 +33,7 @@ techs:
     description: Eine C++ Bibliothek die wir für exakte Berechnungen, geometrische Berechnungen und effizientes Berechnen von Delaunay Triangulationen verwendet haben.
     img: cgal.png
     url: https://www.cgal.org/
-  c++:
+  cpp:
     title: C++11  und die Standard Template Library (STL)
     description: C++ ist eine objektorientierte, low-level Programmiersprache und C++11 ist der ISO zertifizierte Standard  of von 2011. Die STL besteht aus einer Anzahl von Template Klassen die häufig verwendete Algorithmen und Datenstrukturen implementieren.
     img: cpp.png
