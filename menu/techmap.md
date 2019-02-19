@@ -10,3 +10,5 @@ These technologies have been discussed in at least one of my blog posts. Click o
 *All trademarks are properties of their respective owners and I am not related to any of them. Their logos are only displayed for identification purposes of the corresponding technologies and they will be removed upon request.*
 
 {% include techlist.html %}
+
+{% include jmr-analytics.html %}

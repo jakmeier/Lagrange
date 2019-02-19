@@ -10,3 +10,5 @@ Folgende Technologien wurden in mindestens einem meiner Beiträge behandelt. Dur
 *Alle Marken gehören ihren entsprechenden Besitzern. Es bestehen keine Geschäftsbeziehungen zwischen ihnen und mir, ihre Logos sind nur gelistet für Identifikationszwecke der Technologien. Auf Anfrage, werden die Logos sofort entfernt.*
 
 {% include techlist.html %}
+
+{% include jmr-analytics.html %}
