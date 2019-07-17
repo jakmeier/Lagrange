@@ -68,6 +68,18 @@ p.jmr-next-in-series {
   margin: 100px 0;
 }
 
+img[src*='#center'] {
+  display: block;
+  margin: auto;
+  width: 50%;
+}
+
+img + em {
+  display: block;
+  text-align: center;
+  text-emphasis-style: open;
+}
+
 /* Tech stack */
 div.technologies-list {
   display: grid;
