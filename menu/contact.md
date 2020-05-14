@@ -5,9 +5,11 @@ lang: en
 ref: contact
 ---
 My name is Jakob Meier and I like programming and building computer systems.
-I strongly believe in open-source and think this is the best way to move humanity forward as a whole.
 
-Currently, I'm a student in computer science at <a href="https://www.ethz.ch">ETHZ</a>, enrolled in the MSc. course since fall 2018.
-During the day, I am reverse-engineering a CPU L2 cache coherence protocol as part of my ongoing master thesis. At night, I play around with hobby projects and sometimes write something about in on this blog.
+I've recently finished my master's degree in computer science at <a href="https://www.ethz.ch">ETHZ</a> and from June 2020 onwards I will be working full-time as a graduate engineer.
+
+When I have some extra time, I like to play around with hobby projects, which often involve some programming.
+The code is always open-source and usually available publicly on my <a href=https://github.com/jakmeier/>github</a> profile.
+Sometimes, I write about the projects on this blog.
 
 Feel free to contact me for any matter using my email <a href="mailto:{{ site.data.settings.email }}">{{ site.data.settings.email }}</a>.
