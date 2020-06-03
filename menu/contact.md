@@ -6,7 +6,7 @@ ref: contact
 ---
 My name is Jakob Meier and I like programming and building computer systems.
 
-I've recently finished my master's degree in computer science at <a href="https://www.ethz.ch">ETHZ</a> and from June 2020 onwards I will be working full-time as a graduate engineer.
+I am currently living and working in the UK but I grew up in Switzerland and I have finished my master's degree in computer science at <a href="https://www.ethz.ch">ETHZ</a>.
 
 When I have some extra time, I like to play around with hobby projects, which often involve some programming.
 The code is always open-source and usually available publicly on my <a href=https://github.com/jakmeier/>github</a> profile.
