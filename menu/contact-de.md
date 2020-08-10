@@ -13,4 +13,4 @@ Der Programmcode ist dann jeweils öffentlich zugänglich unter meinem<a href="h
 
 Für Anfragen jeglicher Art, bitte kontaktieren Sie mich per E-Mail unter der Adresse <a href="mailto:{{ site.data.settings.email }}">{{ site.data.settings.email }}</a>.
 
-<i>Alle Aussagen, Fakten und Meinungen die auf dieser Webseite zu finden sind, stammen ausschliesslich von mir persönlich und stehen in keiner Hinsicht in Verbindung mit meinen vergangenen, aktuellen, oder zukünftigen Arbeitgebern.</i>
+<i>Alle Aussagen, Fakten und Meinungen die auf dieser Webseite zu finden sind, stammen ausschliesslich von mir persönlich. Sie stehen in keinerlei Hinsicht in Verbindung mit meinen vergangenen, aktuellen, oder zukünftigen Arbeitgebern.</i>

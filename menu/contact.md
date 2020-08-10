@@ -14,4 +14,4 @@ Sometimes, I write about the projects on this blog.
 
 Feel free to contact me for any matter using my email <a href="mailto:{{ site.data.settings.email }}">{{ site.data.settings.email }}</a>.
 
-<i>Opinions, facts, and statements on this site strictly are from me as a private person not related to any of my past, current, or future employers.</i>
+<i>Opinions, facts, and statements on this site are strictly from me as a private person. They are not related to any of my past, current, or future employers.</i>
