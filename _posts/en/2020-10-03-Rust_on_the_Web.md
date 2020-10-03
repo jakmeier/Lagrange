@@ -887,6 +887,9 @@ I am especially interested in hearing about the pain points of other people and 
 Are there already great libraries around? Have you thought about libraries you want to create, or are have you already created them?
 Let me know, I would love to have a discussion.
 
+Discussions on [/r/javascript](https://www.reddit.com/r/javascript/comments/j4ou0g/rust_meets_javascript_a_clash_of_programming/) and
+[/r/rust](https://www.reddit.com/r/rust/comments/j4ot6b/rust_meets_the_web_a_clash_of_programming/).
+
 ## Epilogue
 
 Ruth is a young inhabitant of the browser with Rustacean parents.
