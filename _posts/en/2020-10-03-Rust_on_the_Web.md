@@ -72,7 +72,7 @@ I want to find out how viable it is and when it makes sense to use Rust in the b
 <!-- But to make a point about the fundamentally different approach of JavaScript compared to Rust, I have to write a little bit about the fundamental design elements of JavaScript as the main programming language for browsers. -->
 
 When browsers have first been created, people were very excited.
-Text and images could be places and styled with dozens of possibilities.
+Text and images could be placed and styled with dozens of possibilities.
 It is a second Gutenberg Revolution, everyone gets access to an infinite amount of information that was previously unreachable. What a great achievement!
 
 Then, those elements became interactive with the addition of a scripting language that can run directly in the browser and modify what is displayed.
