@@ -12,7 +12,6 @@ ref: untapped-rust
 techs:
 ---
 
-
 <p class="intro">
 Today, I'm writing about what types can be used for other than checking code properties.
 It will involve a good chunk of dynamic typing, and yes it's in Rust.
@@ -974,6 +973,7 @@ I'm always looking to improve my writing.
 Finally, I'm really interested to hear more opinions about this kind of dynamic typing.
 Do you think it's a hidden gem waiting to be applied more widely in Rust? Or do you think it very niche and should rarely, if ever be used?
 
+*This blog has been shared on the [Rust programming forum](https://users.rust-lang.org/t/blog-post-untapped-potential-in-rust-s-type-system/60372).*
 
 <!-- ## References -->
 [actor-wikipedia]: https://en.wikipedia.org/wiki/Actor_model
