@@ -62,13 +62,8 @@ I then took it to extreme levels of dynamic typing that I didn't expect to be po
 Along the way, I had to reconsider once again what a type actually is.
 And since I found the results quite interesting and surprising, I wanted to share it in this article.
 
-<!-- But no worries, it's not going to be Python-like duck types, just the level of runtime type information that is supported in the Rust core. -->
 
 # Background: Dynamic Types in Rust
-<!-- 
-*Note: This article goes quite deep into the type system. It is assumed that the reader is familiar with the Rust type system. I'm not going to repeat concepts covered in the Rust book, for example. I always try to write as inclusive as possible. But this time I wasn't able to keep it simple enough for a Rust beginner to understand all the details, without unproportionally blowing up the article's size. But I hope it is still an interesting read even for Rust programmers with little experience, as long as they don't get hung up on details they don't understand.* -->
-
-<!-- To have a meaningful discussion about types at all, I need to say what I mean by it exactly. So here my definition for the purpose of this article: -->
 
 In some languages, the type of every (non-primitive) value is embedded in machine code.
 It's like a hidden field implicitly present in every object.
@@ -83,18 +78,8 @@ Trait objects essentially provide opt-in runtime type information.
 But their power is fairly limited as they only gives access to the functions of a specific trait and its parents traits.
 To know if we are dealing with a specific type, one more trick is required.
 
- <!-- as pointers to V-tables or unique IDsm which allows to inspect the type of an object at runtime. -->
-<!-- In Rust, types are a compile-time-only construct. -->
-<!-- They have no presence in the compiled machine code. -->
-<!-- But I'm glad to tell you that there is a zero-cost abstraction that sometimes works like runtime checks of other languages. -->
-<!-- So let's have a look inside the compiler. -->
-<!-- Okay, maybe not actually look inside but let's think about what happens inside the compiler. -->
-<!-- According to my definition, they only define some rules as to how the code should be generated. -->
-
 Using only tools [from the core standard library][any-docs], we can ask the compiler for a `TypeId` of any type and store this for our own use at runtime.
 The compiler will then put a unique constant number there for the type ID.
-<!-- No function call or anything like that is required at runtime. -->
-<!-- This is possible because types in Rust are a compile-time only construct and the compiler hence can assign a unique ID to every type. -->
 
 Here is how type IDs are created. ([Run it on the playground!][type-id-example-0])
 
@@ -134,41 +119,6 @@ fn count_rectangles(shapes: &[Box<dyn Shape>]) -> usize {
     n
 }
 ```
-
-<!-- While the type-checker does its magic, the types defined in the program are most likely listed and stored inside a data structure for easy lookups that various checks have to perform. -->
-<!-- How exactly this data structure looks doesn't really matter. What matters is that the compiler knows ex -->
-<!-- And indeed, the standard library even offers a way in which the compiler inserts this type information at runtime, in the form of a `TypeId`. -->
-<!-- Here, I'm not talking about what exists in our code but something that only exists inside the compiler when it processes our code.  -->
-<!-- We don't need to dig into the compiler internals to see how it's done exactly. -->
-<!-- But we can assume the compiler represents our types as some kind of values that can be compared to each other, as it needs to do many type comparisons. -->
-
-<!-- `TypeId` is tightly bound to the [`Any` trait][any-docs] which has the trait method `type_id()`.
-The trait is implemented for any type, as long as there are no non-static lifetimes involved.
-This means we can call `type_id()` on almost every value and the compiler will make sure that function returns a value of `TypeId` that corresponds to the original value's type.
-
-Allowed operations on the IDs include comparing and hashing them. This is at the base of most tricks presented in this article. -->
-
-<!-- Start aside 1 -->
-<!-- The limitation to static lifetimes is usually not a problem. Take this example.
-
-```rust
-fn foo(a: &A) {
-    a.type_id();
-}
-```
-
-This works, despite a having a dynamic (eluded) lifetime. The reason is the automatic dereference on them method call.
-So this actually returns the ID of `A`, not `&A`. That seems to be more useful anyway.
-And it's not clear to me what it would even mean to take the lifetime into consideration here.
-Probably, each caller site would have its own lifetime instantiated.
-As a result, the function `foo()` from the example would need to be monomorphized to use different type ids for each caller.
-But that's not what we have, perhaps for the better. -->
-<!-- Why only static lifetimes?
-As far as I can tell, nothing makes it impossible on a fundamental level to support dynamic lifetimes.
-However, it would be a significant work for the compiler team and the use cases are hard to imagine.
-[RFC-1849][rfc-1849] proposed to use a hack that supports dynamic lifetimes but 
-But it has been decided that it's better to not support it, as it's hard to find valid use cases and it would be easy to use it wrong. (See ) -->
-<!-- End aside 1 -->
 
 The method `type_id()` is defined on the `Any` trait, which has a blanket implementation for, unsurprisingly, any type. (There is a small restriction on the type but this is beyond the scope of this article.)
 
@@ -373,100 +323,6 @@ Essentially, a message with the identifier of the method and the argument values
 
 This process can be implemented in Rust and dynamic types come in very handy.
 
-<!-- I'm now going to show such an implementation where types are in a one-to-one relation to objects (as opposed to one-to-many in class-based OOP languages) and dynamic dispatch for the methods is based solely on types (as opposed to method names). -->
-
-<!-- 
-In this section, I sketch the implementation of a publish-subscribe library using types as message types and topics.
-Put in a different way, I implement zero-setup channels with multiple receivers and senders.
-Here is a code preview of a simple case with single receiver and single sender.
-```rust
-struct LogMessage(&'str);
-struct Logger;
-
-impl Logger {
-    fn log(&mut self, msg: &LogMessage) {
-        println!("{}", msg.0);
-    }
-}
-
-// The type of LogMessage::log is fn(&mut Logger, msg: &LogMessage)
-// The compiler thus derives two type parameters:
-//  MSG      = LogMessage
-//  RECEIVER = Logger
-// Note that the subscription is made without prior channel setup.
-subscribe(LogMessage::log);
-// (Library stores subscription)
-
-// Compiler derives
-//  MSG      = LogMessage
-publish(LogMessage("Starting Log"));
-// (Library looks up all registered subscriptions for LogMessage and calls them.)
-```
-
-Without further ado, let's get into it.
- -->
-<!-- ### The absence of Publish-Subscribe in Rust
-*Why is this here? It doesn't fit the narrative.*
-
-Do you know any publish-subscribe library in Rust that's actively used?
-I, for one, couldn't find any on crates.io.
-Let's see why that might be. How would an API for such a library look?
-
-
-A typical publish-subscribe setup in JavaScript looks like this:
-```js
-var token = PubSub.subscribe('LOGGING', mySubscriber);
-PubSub.publish('LOGGING', 'Hello World!');
-```
-Here, `'LOGGING'` is the topic and `mySubscriber` a function, closure, or object that has a specific listening method.
-
-This is a so-called stringy API, something considered unergonomic in Rust code.
-Let's try to come up with something more rusty.
-
-First, we'll define topics by an enum instead of a string.
-
-```rust
-enum Topic {
-    Debug,
-    Log,
-}
-fn publish(topic: Topic, data: String) { /* ... */ };
-fn subscribe(topic: Topic, f: Fn(&String)) { /* ... */ };
-
-// Sending
-publish(Topic::Log, format!("Hello {}!", "World"));
-
-// Receiving
-subscribe( Topic::Debug, |data: &String| { ... } );
-subscribe( Topic::Log,   |data: &String| { ... } );
-```
-
-This code represents the desired interface for me.
-The message type is chosen to be a `String` but it could be anything.
-But it sadly doesn't work for a library, since the topics and message types should be defined by the library user, not inside the library.
-So let's add some generic type parameters to the two important functions.
-
-```rust
-fn publish<TOPIC, DATA>(topic: TOPIC, data: DATA) { /* ... */ };
-fn subscribe<TOPIC, DATA>(topic: TOPIC, f: Fn(&DATA)) { /* ... */ };
-```
-
-Okay, this could be made into a library.
-However, something is odd here in terms of borrowing.
-The publisher gives up ownership of the data and yet the subscriber only gets a borrowed value.
-If you think about it, it's almost the only way to make multiple receivers possible without cloning data.
-But it seems a bit odd to give up ownership like this.
-
-
-Perhaps because of this, it is very common to see channels (message queues) in Rust but not common at all to see publish-subscribe.
-So, before I show that publish-subscribe can work nicely in Rust, I just quickly go over channels and their limitations. -->
-
-<!-- ### Channels are not enough -->
-<!-- Publishing data and sharing it with multiple subscribers typically involves giving up ownership, or cloning it  -->
-<!-- Perhaps because publish-subscribe works better  -->
-
-
-<!-- ### Nuts: Receiver(s) and the data of the message are defined by a type -->
 ## What I want to achieve and why
 Last year, I wrote about a problem I was facing with Rust running in the browser through WASM. (See [*Rust meets the web - a clash of programming paradigms*][wasm-article])
 
@@ -502,10 +358,6 @@ Borrowing instead of moving wouldn't work either, since the closures outlive the
 
 To resolve this, I would have to put the data behind a shared smart pointer, like `Arc<>` and then introduce inner mutability.
 That's annoying and I'd like to have a better way.
-
-
-<!-- Well, first off, this isn't the API of a real library. With the current state of web_sys, there would have to be too many  -->
-
 
 Back when I wrote the article complaining about these problems, I didn't really solve the issue, I just pointed it out.
 But by now, I think I've got a satisfying solution that I've been using for many months.
@@ -564,8 +416,6 @@ This is possible since `my_library` has it stored globally.
 The global storage keeps only one object of each type. (It uses a heterogenous singleton collection internally.)
 Therefore, the object that should be called is known as long as the type is specified.
 
-<!-- The first type parameter of `invoke` specifies the type of the object.
-The second type parameter, left blank (`_`), is for the type of the method argument, which can be inferred by the compiler. -->
 
 This becomes very useful when working with closures as callbacks.
 We could now have many different callbacks that all invoke methods on a shared object, without actually worrying about the data sharing part.
@@ -632,11 +482,6 @@ To be honest, it *could* probably be done this way.
 But we can make our life much easier if we store callable function pointers instead.
 We just need to find a general-enough callable type.
 
-<!-- This might work for function pointers. But for closures, it would be very annoying if we wanted to register a closure as a method, instead of a fixed function as in the previous example. -->
-<!-- This is fine in the example shown so far but it's unnecessarily restrictive. -->
-<!-- If we store a callable function pointer instead, then we can also use closures, without worrying about their exact type and involved lifetimes. -->
-
-<!-- Let's derive the function pointer type together. -->
 First, we have to pick one of the traits `Fn`, `FnOnce` and `FnMut` as our base trait.
 `FnMut` is the most general of them, we shall go with that to not limit the user.
 (You can read up on the differences between them in the documentation of [FnMut][docs-fnmut] and on what they are exactly in the Rustonomicon chapter about [Higher-Rank Trait Bounds][docs-higher-level-trait-bound])
@@ -667,7 +512,6 @@ pub struct Nut {
 
 Wow, that's a type definition to scare off any readers.
 But please bare with me!
-<!-- It only gets a little bit worse right now and then afterwards I'm done with the heavy stuff, I promise! -->
 The nice thing is that calling these methods is now just a matter of three simple steps.
 1. Look up the object.
 2. Look up the method.
@@ -728,7 +572,6 @@ We have three type arguments to describe the permitted functions and closures we
 Here we don't have any boxes on the interface, as this is not something we want the user to be bothered with.
 
 If you wonder what the `'static` is for in the trait bound, this a necessary constraint on the lifetime of the type of the function.
-<!-- We could have a trait object of a type with non-static lifetime and the compiler wouldn't be able to store such a trait object in a collection as we are doing it here. -->
 If you have never seen such a bound, don't worry, it's not important and I'd rather have your attention on the broader concept that I'm showing you here.
 (But if you must know, feel free to check out the error message on the [Playground][playground-simplified-nuts] if you remove the bound and follow the trail from there. 🙂️)
 
@@ -749,8 +592,6 @@ Here is a [Playground link][playground-simplified-nuts] if you want to see it in
 
 With this approach, I was able to embrace the event-driven browser world that uses callbacks everywhere.
 Any registered object is always accessible from anywhere, including from inside closures.
-
-<!-- Just to show this flexibility, here is [another Playground][playground-simplified-nuts-2] which uses the same `my_library` code but uses closures as methods, instead of functions. -->
 
 ## More about Nuts
 The library [Nuts][nuts] I mentioned earlier, covers more than just the case I've shown you so far.
@@ -795,7 +636,6 @@ Invocations must then use a syntax like `send_to::<Receiver>(msg)` to make it cl
 
 But to really solve the problem I had initially, Nuts needed to do more.
 Calling a method on an object is pretty good already but sometimes data also needs to be shared between activities.
-<!-- You *could* always refactor to make a single parent activity that has all other activities... -->
 Therefore, Nuts supports to group activities in [domains][docs-domains]. Each domain has a singleton collection as introduced in section one.
 Subscription handlers can access this collection mutably.
 
@@ -858,10 +698,6 @@ But there are key differences.
 Functionally, the biggest difference is that each handler in Eventbus can modify the event/message and subsequent handlers will see the changes. And similar to handler_map, handlers in Eventbus have no state like the objects in Nuts.
 On a syntax level, Eventbus uses macros (`register_hook!` and `post_event!`) whereas Nuts works fine using regular function calls.
 
-
-<!-- In a way, I think of Nuts as OOP (in its purest form) as a library. -->
-<!-- It stores arbitrary objects with arbitrary methods, which can be called later. -->
-<!-- But of course, the  -->
 
 At this point, I also want to briefly differentiate Nuts from the [actor model][actor-wikipedia].
 
@@ -940,14 +776,6 @@ A [pull-request][typeid-widen] to increase the integer size has been discussed a
 
 ## Why I'm not using TypeId
 Considering all of this, I can't really use `TypeId`.
-<!-- It's a private value and `Serialize` is not implemented.
-Yes, I could do tricks like transmuting it, or even parsing back the debug print.
-But I'm not satisfied with such a hack that might break on every Rust release. -->
-
-<!-- 
-Fun fact, when they considered to increase the size of the integer, the complier team searched and [listed all abusers][typeid-abuser-list]  they could find using [crater][crater].
-This was done to evaluate the potential impact of this change.
- -->
 
 I realized that `TypeId` doesn't reflect my use case well at all.
 It's designed to be used inside a single binary, not shared among many like I'm envisioning.
@@ -964,7 +792,6 @@ So, to avoid memory corruption, the type ID I'm going to use must change if a fi
 My plan became clear. I have to create my own, universal type ID.
 
 ## Deriving my own Type ID
-<!-- I don't have the details, yet. Should I try to come up with them soon enough? Or avoid going into it? Is it essential to the discussion? Kind of, I think. Let's sleep a night over it. -->
 
 A procedural macro seems to be best way to compute a type ID.
 A `#[derive(UniversalType)]` can be slapped onto any `struct`, `enum` and `union`.
@@ -1030,7 +857,6 @@ It's just that another binary might have another `TypeId` associated while my ru
 
 With that realization, we can use a `HashMap<UniversalTypeId, Box<dyn Any>>` and then do all the tricks we previously did with `HashMap<TypeId, Box<dyn Any>>`.
 Inside a single binary, this is completely equivalent to what I did in section one and two.
-<!-- The safety of this is based on the guarantee that on -->
 
 But we have to be careful when sending data across binaries. The memory layout of Rust is not stable, so we can't just send the pure binary.
 Luckily, Rust has good tooling for safe serialization with [serde][serde-github] and, for example, [bincode].
@@ -1125,7 +951,6 @@ Finally, I sketched an approach to stretch dynamic types beyond the limitations 
 
 All these ideas offer an interesting mix between dynamic typing with compile-time checked types.
 When I started playing around with these concepts, I thought what I did was completely nuts.
-<!-- (Should give you a not-so-subtle hint for how I picked the name of the published crate.) -->
 I love Rust for its static type system, going full dynamic seemed like such a stupid idea!
 
 But then I started to see how useful it can be.
@@ -1133,13 +958,6 @@ And the big surprise was that static type checks also rule over essentially all 
 As evident by all the complex type arguments shown earlier, you just can't escape the Rust compiler!
 Once again, I was blown away by the phenomenal power of Rust's type system.
 That's why I wanted to write this article.
-<!-- I hope you found it interesting, too! -->
-
-<!-- Finally, I talk a bit about the wider picture. How do the described concepts compare to existing libraries?
-What is the role of dynamic typing in Rust?
-And what are my personal plans regarding tis topic. -->
-
-<!-- TODO: https://rhai.rs/ (`Dynamic` with `dyn Any` but more structural knowledge, uses name as identity other than TypeId but requires registration) -->
 
 It was not an easy article to write, however.
 I realized in my first couple of attempts that I didn't even know myself what this should be good for.
@@ -1156,15 +974,6 @@ I'm always looking to improve my writing.
 Finally, I'm really interested to hear more opinions about this kind of dynamic typing.
 Do you think it's a hidden gem waiting to be applied more widely in Rust? Or do you think it very niche and should rarely, if ever be used?
 
-
-<!-- Future Work:
-    * Using & and &mut closures to infer automatically what kind of lock is necessary (no overloading, no specialization, makes it quite tricky for now without explicit calls)
-    * Distributed System around this
-
-Conclusion:
-    I showed several use cases for std::any. There will be more to find and explore.
-    Made possible by Rust's strong type system, std::any, and a refreshed syntax over C.
-    My analysis of the generated code shows that overhead is marginal, also verified by experiment. -->
 
 <!-- ## References -->
 [actor-wikipedia]: https://en.wikipedia.org/wiki/Actor_model
