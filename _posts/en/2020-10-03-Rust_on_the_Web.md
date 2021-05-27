@@ -9,6 +9,7 @@ image_tooltip: "The sky as seen from a immigrant. I took it when I moved to the 
 # thumbnail_style: no-crop
 lang: en
 ref: nuts1
+nextref: nuts2
 techs:
   js:
     title: "JavaScript"
@@ -26,9 +27,6 @@ techs:
     img: wasm.svg
     description: "WebAssembly is a new web standard (1.0 since October 2017) that allows running bytecode in the browser. While it is possible to compile C/C++ and other languages to Wasm, right now the tooling for Rust is definitely the most advanced. Partly because both the Rust and the Wasm project originated at Mozilla and are actively pushed by them."
 ---
-
-<!-- TODO: Lighter tone or more concise or preferably both -->
-<!-- TODO: More fore-shadowing / string it all together with a rotem faden -->
 
 <p class="intro"></p>
 
