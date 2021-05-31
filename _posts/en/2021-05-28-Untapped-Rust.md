@@ -162,8 +162,8 @@ assert_eq!(  888, *collection.get::<u32>() );
 Most collections in Rust are homogenous, that is, they store objects which are all of the same type. For example, a `Vec<f32>` only stores floats.
 But we can make it one-way heterogenous by using pointers to trait objects.
 
-For example, `Vec<Box<dyn PartialOrd>>` stores a collection of pointers. The pointer types that can be accepted by this vector includes `Box<f32>`, `Box<u64>`, and many other types.
-Thus, the data types we can put in are heterogenous. But what we get out is just a pointer to a trait object (`Box<dyn PartialOrd>`) and the actual type of the inner value cannot be recovered.
+For example, `Vec<Box<dyn ToString>>` stores a collection of pointers. The pointer types that can be accepted by this vector includes `Box<f32>`, `Box<u64>`, and many other types.
+Thus, the data types we can put in are heterogenous. But what we get out is just a pointer to a trait object (`Box<dyn ToString>`) and the actual type of the inner value cannot be recovered.
 
 To have a fully heterogenous collection, the getter-method should be able to return objects of different types.
 This is trivially possible in dynamically typed languages, such as Python or JavaScript.
@@ -303,6 +303,8 @@ Digging deeper while writing this article, I found that [Chris Morgan][chris-mor
 At the time of writing the crate has over 1.3 million all-time downloads.
 I would say that classifies as widely used.
 
+So, types can be used as keys and the community is doing that already.
+To uncover untapped potential, let's have a look at opportunities beyond that in the next section.
 
 <!-- ## Section 2: Types as Channels and Events -->
 # Section 2: Type-Oriented Message Passing
@@ -810,18 +812,16 @@ This way, any change to a field or to the name of the struct will cause the type
 Which is exactly what I want.
 
 What about the module the type is defined inside? Or the crate?
-Actually, I don't care.
-Or more precisely, I want this to be a non-factor for type uniqueness. 
-At least that was my initial gut feeling.
+At first, I thought I don't care.
+Or more precisely, I wanted this to be a non-factor for type uniqueness. 
 
 Why, I hear you ask. The answer is maximum flexibility.
 Let's look at each of the two. (crate and module)
 
 A small refactor, such as renaming a parent module, should not change the identity of my type, in my view.
 Thus, the module should not be part of it.
-Who ever uses the tye IDs should just be aware that equally named structs with identical fields have the same universal ID, even if the Rust compiler considers them different.
 
-Making it even crate independent is a heavier decision, however.
+Making it even crate independent is the other decision.
 I like and dislike the idea that a crate can impersonate types of another.
 Liking for the possibility to share types without a cargo dependency, disliking for the risks involved.
 
@@ -830,17 +830,21 @@ The problem is more that every field suddenly becomes part of the public interfa
 One big problem with that is that multiple crates could accidentally share types.
 Small updates could change that and thus lead to all kind of weird bugs.
 
-But it gets even worse, the generated type ID would disagree with the compilers notion of a type even within a single binary.
-There will be differences, by design, when comparing types across binaries.
-But within a binary, this sounds like a terrible flaw.
+But there is one very important reason why the crate and module chain should really be part of the type ID.
+That is, otherwise, the generated type ID would disagree with the compilers notion of a type even within a single binary.
 
-A flexible solution could be to introduce namespace as an input the procedural macro.
+I mean, I want there to be differences when comparing types across binaries, that is kind of the point.
+But within a binary, it would be quite flawed to have these discrepancies.
+Thus, for the usage example, I'll assume module name and crate are considered for calculating the ID.
+
+On the other hand, a flexible solution could be to introduce namespace as an input to the procedural macro.
 If left unspecified, the fully qualified name of the module would be used, including the crate name.
 Then, in the default case, the generated type ID should be equivalent (in terms of its equality relation) to `core::any::TypeId`. 
 
 The nice thing is that with this flexibility, someone who knows what she is doing can still do weird sharing by overriding that namespace.
+Who ever decides to change a namespace should then just be aware that equally named structs (in different modules) with identical fields have the same universal ID, even if the Rust compiler considers them to be different.
 
-I've implemented a prototype of this idea in a procedural macro, [the code is on Github][github-uti].
+I started implementing a prototype of a universal type idea in a procedural macro, [the code is on Github][github-uti].
 If it matures well, I might release it on crates.io at some point.
 But at the moment, the implementation is incomplete and there are still open design questions around. (How to handle generic type parameters?)
 
@@ -851,7 +855,7 @@ In my [example implementation][github-uti], I created a trait called `UniversalT
 For types that implement it, a `UniversalTypeId` can be retrieved, akin to `TypeId` from the Rust core.
 
 The `UniversalTypeId` is best used in conjunction with the standard `TypeId`.
-Within each binary, there should be a one-to-one mapping between the two. (Ignoring namespace sharing to keep it simple.)
+Within each binary, there should be a one-to-one mapping between the two. (Ignoring namespace sharing to keep it simple. In other words, module names and origin crate matter for type ID.)
 It's just that another binary might have another `TypeId` associated while my rules for the `UniversalTypeId` sees them as the same type.
 
 With that realization, we can use a `HashMap<UniversalTypeId, Box<dyn Any>>` and then do all the tricks we previously did with `HashMap<TypeId, Box<dyn Any>>`.
@@ -963,14 +967,15 @@ I realized in my first couple of attempts that I didn't even know myself what th
 Of course, I knew my code makes sense and I had been using it effectively.
 But articulating why my (admittedly weird) approach makes any sense was challenging.
 Beyond that, striking the balance between brevity and not leaving out important details was extremely difficult.
-Anyway, I hope this final version makes my points clear.
+
+Anyway, I hope this final version makes my point clear: We (as a community) can use Rust types for more than we've done so far.
 
 I always try to write for the widest possible audience.
 But I fear this time, it might only be digestible by veteran Rust programmers.
 Please let me know if you have any feedback regarding this. (Or otherwise.)
 I'm always looking to improve my writing.
 
-Finally, I'm really interested to hear more opinions about this kind of dynamic typing.
+Finally, I'm really interested to hear more opinions about this kind of dynamic typing. (Taking it even further than [AnyMap][anymap] already does.)
 Do you think it's a hidden gem waiting to be applied more widely in Rust? Or do you think it very niche and should rarely, if ever be used?
 
 *This blog has been shared on the [Rust programming forum](https://users.rust-lang.org/t/blog-post-untapped-potential-in-rust-s-type-system/60372).*
