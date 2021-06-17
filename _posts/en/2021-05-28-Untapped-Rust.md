@@ -831,7 +831,7 @@ One big problem with that is that multiple crates could accidentally share types
 Small updates could change that and thus lead to all kind of weird bugs.
 
 But there is one very important reason why the crate and module chain should really be part of the type ID.
-That is, otherwise, the generated type ID would disagree with the compilers notion of a type even within a single binary.
+That is, otherwise, the generated type ID would disagree with the compiler's notion of a type even within a single binary.
 
 I mean, I want there to be differences when comparing types across binaries, that is kind of the point.
 But within a binary, it would be quite flawed to have these discrepancies.
@@ -842,7 +842,7 @@ If left unspecified, the fully qualified name of the module would be used, inclu
 Then, in the default case, the generated type ID should be equivalent (in terms of its equality relation) to `core::any::TypeId`. 
 
 The nice thing is that with this flexibility, someone who knows what she is doing can still do weird sharing by overriding that namespace.
-Who ever decides to change a namespace should then just be aware that equally named structs (in different modules) with identical fields have the same universal ID, even if the Rust compiler considers them to be different.
+Whoever decides to change a namespace should then just be aware that equally named structs (in different modules) with identical fields have the same universal ID, even if the Rust compiler considers them to be different.
 
 I started implementing a prototype of a universal type idea in a procedural macro, [the code is on Github][github-uti].
 If it matures well, I might release it on crates.io at some point.
