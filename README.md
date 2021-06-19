@@ -8,7 +8,7 @@ The blog itself is over at [www.jakobmeier.ch](https://www.jakobmeier.ch).
 ## Follow me
 
 Sorry, I don't do a lot of social media.
-If you would like to be notified when I upload a new blog, feel free to star this repository or [follow my user on github](https://github.com/jakmeier).
+If you would like to be notified when I upload a new blog, feel free to watch this repository or [follow my user on github](https://github.com/jakmeier).
 
 ## Lagrange Template
 
